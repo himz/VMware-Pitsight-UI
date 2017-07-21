@@ -63,7 +63,7 @@ public class VaadinUI extends UI {
 	
 	private final Panel panel;
 	GridLayout mainLayout;
-
+	RootObject root ;
 	@Autowired
 	public VaadinUI(CustomerRepository repo, CustomerEditor editor) {
 		this.repo = repo;
@@ -102,7 +102,7 @@ public class VaadinUI extends UI {
 			//Long dateLong=Long.parseLong(sdf.format(epoch*1000));
 		
 	    		Label capTimeStamp = new Label("Time Stamp: ");	    		capTimeStamp.addStyleName("h3");
-	    		Label txtTimeStamp = new Label(sdf.format(epoch*1000)); txtTimeStamp.addStyleName("h3");
+	    		Label txtTimeStamp = new Label(sdf.format(epoch)); txtTimeStamp.addStyleName("h3");
 	    		hlTimeStamp.addComponent(capTimeStamp); hlTimeStamp.addComponent(txtTimeStamp);
 	    		
 			HorizontalLayout hlProcessList = new HorizontalLayout();
@@ -160,7 +160,7 @@ public class VaadinUI extends UI {
 		mainSplitter.setSizeFull();
 		mainSplitter.setSplitPosition(20);
 		setContent(mainSplitter);
-		RootObject root = getRootObject(new File(PITSIGHT_JSON_FILE_LOC));
+		root = getRootObject(new File(PITSIGHT_JSON_FILE_LOC));
 		System.out.println(root);
 		
 		//leftLayout.addComponent(actions);g
@@ -177,13 +177,8 @@ public class VaadinUI extends UI {
 
 	                @Override
 	                public void buttonClick(ClickEvent event) {
-	                    /*mainLayout.removeAllComponents();*/
 	                    List<Snapshots> snapshotList = vm.getSnapshots();
-	                    /*	                    for (Snapshots snapshot : snapshotList) {
-	                    		Button bSnap = new Button(snapshot.getId());
-	                    		mainLayout.addComponent(bSnap);
-	                    }*/
-	                	createSnapshotLayout(snapshotList);
+	                		createSnapshotLayout(snapshotList);
 	                    
 	                }
 	            });
