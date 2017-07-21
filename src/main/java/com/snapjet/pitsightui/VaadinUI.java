@@ -2,8 +2,10 @@ package com.snapjet.pitsightui;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -76,7 +78,7 @@ public class VaadinUI extends UI {
 		mainLayout.removeAllComponents();
 		for (Snapshots snapshot : snapshotList) {
 
-	    		Button bSnap = new Button("Retrieve Snapshot");
+	    		Button bSnap = new Button("Restore VM from Given PIT Snapshot");
 	    		Label full = new Label();
 	    		String snapshotText = snapshot.getId() ;
 	    		full.setCaption(snapshotText);
@@ -90,8 +92,13 @@ public class VaadinUI extends UI {
 	    		
 	    		
 			HorizontalLayout hlTimeStamp = new HorizontalLayout();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
+			sdf.setTimeZone(TimeZone.getTimeZone("PST"));
+			long epoch = Long.parseLong(snapshot.getTimestamp()); 
+			//Long dateLong=Long.parseLong(sdf.format(epoch*1000));
+		
 	    		Label capTimeStamp = new Label("Time Stamp: ");	    		capTimeStamp.addStyleName("h3");
-	    		Label txtTimeStamp = new Label(snapshot.getTimestamp()); txtTimeStamp.addStyleName("h3");
+	    		Label txtTimeStamp = new Label(sdf.format(epoch*1000)); txtTimeStamp.addStyleName("h3");
 	    		hlTimeStamp.addComponent(capTimeStamp); hlTimeStamp.addComponent(txtTimeStamp);
 	    		
 			HorizontalLayout hlProcessList = new HorizontalLayout();
