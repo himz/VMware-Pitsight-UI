@@ -45,9 +45,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 @PreserveOnRefresh
 public class VaadinUI extends UI {
 	
-	private final String PITSIGHT_JSON_FILE_LOC ="/Users/pandeyh/pitsight/pitsight.json";
-	private final String COMMAND_FILE_LOC ="/Users/pandeyh/pitsight/testFile.txt";
-	
+	String filePath = "C:\\Users\\vdpadmin\\Perforce\\reniss_win10_workspace\\stsds-main\\testcases\\stsds\\src\\main\\java\\com\\vmware\\systest\\tests\\stsds\\testcases\\vsandp\\";
+	String jsonFileName = "pitAnalyzer.json";
+	String restoreFileName = "testFile.txt";
+
+	private final String PITSIGHT_JSON_FILE_LOC = filePath + jsonFileName;
+	private final String COMMAND_FILE_LOC = filePath + restoreFileName;
 
 	private final CustomerRepository repo;
 
