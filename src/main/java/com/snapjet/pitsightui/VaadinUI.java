@@ -134,7 +134,8 @@ public class VaadinUI extends UI {
 		// build layout
 		VerticalLayout leftLayout = new VerticalLayout();
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-		mainLayout = new VerticalLayout(grid, editor);
+		//mainLayout = new VerticalLayout(grid, editor);
+		mainLayout = new VerticalLayout();
 		
 		HorizontalSplitPanel mainSplitter = new HorizontalSplitPanel(leftLayout, mainLayout);
 		mainSplitter.setSizeFull();
@@ -143,9 +144,7 @@ public class VaadinUI extends UI {
 		RootObject root = getRootObject(new File("/Users/pandeyh/pitsight/pitsight.json"));
 		System.out.println(root);
 		
-		leftLayout.addComponent(actions);
-		leftLayout.addComponent(new Button("New Button1"));
-		leftLayout.addComponent(new Button("New Button2"));
+		//leftLayout.addComponent(actions);
 		List<Vm> vms = root.getVm();
 		for (Vm vm : vms) {
 			System.out.println(vm);
@@ -172,7 +171,6 @@ public class VaadinUI extends UI {
 			}
 			
 		}
-		verticalLayout.addComponent(new Button("New Button3"));
 		mainLayout.addComponent(verticalLayout);
 		
 
