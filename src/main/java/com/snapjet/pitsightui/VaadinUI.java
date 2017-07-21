@@ -3,7 +3,6 @@ package com.snapjet.pitsightui;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -15,17 +14,14 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -151,6 +147,7 @@ public class VaadinUI extends UI {
 			System.out.println(vm.getName());
 			if(vm != null && vm.getName() != null) {
 				Button b1 = new Button(vm.getName());
+				b1.setCaption(vm.getName() + "  (Policy RPO: " + vm.getPolicyRpo() + " Mins)");
 				b1.addClickListener(new ClickListener() {
 
 	                private static final long serialVersionUID = 5625402155456539564L;
