@@ -20,6 +20,7 @@ import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
@@ -61,7 +62,7 @@ public class VaadinUI extends UI {
 	private final VerticalLayout verticalLayout;
 	
 	private final Panel panel;
-	VerticalLayout mainLayout;
+	GridLayout mainLayout;
 
 	@Autowired
 	public VaadinUI(CustomerRepository repo, CustomerEditor editor) {
@@ -76,8 +77,9 @@ public class VaadinUI extends UI {
 	
 
 	public void createSnapshotLayout(List<Snapshots> snapshotList) {
-		
-		mainLayout.removeAllComponents();
+		if(mainLayout.getComponentCount() > 0) {
+			mainLayout.removeAllComponents();
+		}
 		for (Snapshots snapshot : snapshotList) {
 
 
@@ -148,9 +150,13 @@ public class VaadinUI extends UI {
 		VerticalLayout leftLayout = new VerticalLayout();
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
 		//mainLayout = new VerticalLayout(grid, editor);
-		mainLayout = new VerticalLayout();
-		
-		HorizontalSplitPanel mainSplitter = new HorizontalSplitPanel(leftLayout, mainLayout);
+		//mainLayout = new VerticalLayout();
+		Panel p = new Panel();
+		mainLayout = new GridLayout(2,100);
+		p.setSizeFull();
+		mainLayout.addStyleName("v-scrollable");
+		p.setContent(mainLayout);
+		HorizontalSplitPanel mainSplitter = new HorizontalSplitPanel(leftLayout, p);
 		mainSplitter.setSizeFull();
 		mainSplitter.setSplitPosition(20);
 		setContent(mainSplitter);
@@ -185,7 +191,7 @@ public class VaadinUI extends UI {
 			}
 			
 		}
-		mainLayout.addComponent(verticalLayout);
+		//mainLayout.addComponent(verticalLayout);
 		
 
 		grid.setHeight(300, Unit.PIXELS);
