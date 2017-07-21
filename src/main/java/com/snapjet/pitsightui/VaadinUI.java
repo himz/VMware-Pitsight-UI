@@ -13,6 +13,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Button;
@@ -68,17 +69,55 @@ public class VaadinUI extends UI {
 		this.verticalLayout = new VerticalLayout();
 		this.panel = new Panel();
 	}
+	
 
 	public void createSnapshotLayout(List<Snapshots> snapshotList) {
+		
 		mainLayout.removeAllComponents();
 		for (Snapshots snapshot : snapshotList) {
-	    		Button bSnap = new Button(snapshot.getId());
-	    		Label ta = new Label();
-	    		String snapshotText = snapshot.getId() + "\n" +snapshot.getTimestamp() + "\n" +snapshot.getProcessList() + "\n" + snapshot.getLoggedUsersList() + "\n" + snapshot.getTopTenFilesList();
-	    		ta.setCaption(snapshotText);
+
+	    		Button bSnap = new Button("Retrieve Snapshot");
+	    		Label full = new Label();
+	    		String snapshotText = snapshot.getId() ;
+	    		full.setCaption(snapshotText);
+	    		
+			HorizontalLayout hlPitId = new HorizontalLayout();
+	    		Label capPitId = new Label("Point In Time:");
+	    		capPitId.addStyleName("h1");
+	    		Label txtPitId = new Label("Snapshot " + snapshot.getId());
+	    		txtPitId.addStyleName("h1");
+	    		hlPitId.addComponent(capPitId); hlPitId.addComponent(txtPitId);
+	    		
+	    		
+			HorizontalLayout hlTimeStamp = new HorizontalLayout();
+	    		Label capTimeStamp = new Label("Time Stamp: ");	    		capTimeStamp.addStyleName("h3");
+	    		Label txtTimeStamp = new Label(snapshot.getTimestamp()); txtTimeStamp.addStyleName("h3");
+	    		hlTimeStamp.addComponent(capTimeStamp); hlTimeStamp.addComponent(txtTimeStamp);
+	    		
+			HorizontalLayout hlProcessList = new HorizontalLayout();
+	    		Label capProcessList = new Label("Processes in the System: "); capProcessList.addStyleName("h3");
+	    		Label txtProcessList = new Label(snapshot.getProcessList().toString());txtProcessList.addStyleName("h3");
+	    		hlProcessList.addComponent(capProcessList); hlProcessList.addComponent(txtProcessList);
+	    		
+			HorizontalLayout hlLoggedUserList = new HorizontalLayout();
+	    		Label capLoggedUserList = new Label("Logged Users In the System: ");capLoggedUserList.addStyleName("h3");
+	    		Label txtLoggedUserList = new Label(snapshot.getLoggedUsersList().toString());txtLoggedUserList.addStyleName("h3");
+	    		hlLoggedUserList.addComponent(capLoggedUserList); hlLoggedUserList.addComponent(txtLoggedUserList);
+	    		
+			HorizontalLayout hlTopFilesList = new HorizontalLayout();
+	    		Label capTopFilesList = new Label("Top Files by Size on the System: ");capTopFilesList.addStyleName("h3");
+	    		Label txtTopFilesList = new Label(snapshot.getTopTenFilesList().toString()); txtTopFilesList.addStyleName("h3");
+	    		hlTopFilesList.addComponent(capTopFilesList); hlTopFilesList.addComponent(txtTopFilesList);
+	    		
 	    		VerticalLayout miniSnapLayout = new VerticalLayout();
-	    		miniSnapLayout.addComponent(ta);
+	    		miniSnapLayout.addComponent(hlPitId);
+	    		miniSnapLayout.addComponent(hlTimeStamp);
+	    		miniSnapLayout.addComponent(hlProcessList);
+	    		miniSnapLayout.addComponent(hlLoggedUserList);
+	    		miniSnapLayout.addComponent(hlTopFilesList);
 	    		miniSnapLayout.addComponent(bSnap);
+	    		
+	    		
 	    		mainLayout.addComponent(miniSnapLayout);
 		}
 	}
