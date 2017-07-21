@@ -1,6 +1,8 @@
 package com.snapjet.pitsightui;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -41,6 +43,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 @SpringUI
 @PreserveOnRefresh
 public class VaadinUI extends UI {
+	
+	private final String PITSIGHT_JSON_FILE_LOC ="/Users/pandeyh/pitsight/pitsight.json";
+	private final String COMMAND_FILE_LOC ="/Users/pandeyh/pitsight/testFile.txt";
+	
 
 	private final CustomerRepository repo;
 
@@ -74,7 +80,7 @@ public class VaadinUI extends UI {
 		mainLayout.removeAllComponents();
 		for (Snapshots snapshot : snapshotList) {
 
-	    		Button bSnap = new Button("Restore VM from Given PIT Snapshot");
+
 	    		Label full = new Label();
 	    		String snapshotText = snapshot.getId() ;
 	    		full.setCaption(snapshotText);
@@ -118,6 +124,17 @@ public class VaadinUI extends UI {
 	    		miniSnapLayout.addComponent(hlProcessList);
 	    		miniSnapLayout.addComponent(hlLoggedUserList);
 	    		miniSnapLayout.addComponent(hlTopFilesList);
+	    		
+	    		Button bSnap = new Button("Restore VM from Given PIT Snapshot");
+	    		bSnap.addClickListener(new ClickListener() {
+
+	                private static final long serialVersionUID = 5625402155456539565L;
+
+	                @Override
+	                public void buttonClick(ClickEvent event) {
+	                	writeToFile(snapshot.getId(), COMMAND_FILE_LOC);	                  
+	                }
+	            });
 	    		miniSnapLayout.addComponent(bSnap);
 	    		
 	    		
@@ -137,10 +154,10 @@ public class VaadinUI extends UI {
 		mainSplitter.setSizeFull();
 		mainSplitter.setSplitPosition(20);
 		setContent(mainSplitter);
-		RootObject root = getRootObject(new File("/Users/pandeyh/pitsight/pitsight.json"));
+		RootObject root = getRootObject(new File(PITSIGHT_JSON_FILE_LOC));
 		System.out.println(root);
 		
-		//leftLayout.addComponent(actions);
+		//leftLayout.addComponent(actions);g
 		List<Vm> vms = root.getVm();
 		for (Vm vm : vms) {
 			System.out.println(vm);
@@ -211,6 +228,15 @@ public class VaadinUI extends UI {
 	}
 	// end::listCustomers[]
 
+	public void writeToFile(String content, String fileName) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+			bw.write(content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public RootObject getRootObject(File file) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
